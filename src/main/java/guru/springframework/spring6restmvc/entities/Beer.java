@@ -47,6 +47,7 @@ public class Beer {
 
     @NotNull
     @NotBlank
+    @Size(max = 255)
     private String upc;
     private Integer quantityOnHand;
 

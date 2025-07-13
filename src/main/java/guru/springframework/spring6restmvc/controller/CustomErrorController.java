@@ -15,24 +15,29 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class CustomErrorController {
 
-    @ExceptionHandler(TransactionSystemException.class)
-    ResponseEntity handleJPAViolations(TransactionSystemException exception) {
+//    @ExceptionHandler(TransactionSystemException.class)
+//    ResponseEntity handleJPAViolations(TransactionSystemException exception) {
+//
+//        ResponseEntity.BodyBuilder responseEntity = ResponseEntity.badRequest();
+//
+//        if (exception.getCause() instanceof ConstraintViolationException) {
+//            ConstraintViolationException vs = (ConstraintViolationException) exception.getCause().getCause();
+//
+//            List errors = vs.getConstraintViolations().stream()
+//                    .map(constraintViolation -> {
+//                        Map<String, String> errMap = new HashMap<>();
+//                        errMap.put(constraintViolation.getPropertyPath().toString(),
+//                                constraintViolation.getMessage());
+//                        return errMap;
+//                    }).collect(Collectors.toList());
+//            return responseEntity.body(errors);
+//        }
+//        return responseEntity.build();
+//    }
 
-        ResponseEntity.BodyBuilder responseEntity = ResponseEntity.badRequest();
-
-        if (exception.getCause() instanceof ConstraintViolationException) {
-            ConstraintViolationException vs = (ConstraintViolationException) exception.getCause().getCause();
-
-            List errors = vs.getConstraintViolations().stream()
-                    .map(constraintViolation -> {
-                        Map<String, String> errMap = new HashMap<>();
-                        errMap.put(constraintViolation.getPropertyPath().toString(),
-                                constraintViolation.getMessage());
-                        return errMap;
-                    }).collect(Collectors.toList());
-            return responseEntity.body(errors);
-        }
-        return responseEntity.build();
+    @ExceptionHandler
+    ResponseEntity handleJPAViolations(TransactionSystemException exception){
+        return ResponseEntity.badRequest().build();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
